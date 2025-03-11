@@ -1,4 +1,10 @@
 from typing import Any, List, Literal
+from fabric.widgets.label import Label
+from fabric.widgets.button import Button
+from fabric.widgets.centerbox import CenterBox
+from fabric.widgets.scrolledwindow import ScrolledWindow
+from fabric.widgets.box import Box
+import modules.icons as icons
 
 import gi
 from fabric.core.service import Property, Service, Signal
@@ -321,3 +327,103 @@ class NetworkClient(Service):
     @Property(str, "readable")
     def primary_device(self) -> Literal["wifi", "wired"] | None:
         return self._get_primary_device()
+
+class NetworkConnections(Box):
+    def __init__(self, **kwargs):
+        super().__init__(
+            name="network",
+            spacing=4,
+            orientation="vertical",
+            **kwargs,
+        )
+
+        self.widgets = kwargs["widgets"]
+
+        self.buttons = self.widgets.buttons.bluetooth_button
+        self.bt_status_text = self.buttons.bluetooth_status_text
+        self.bt_status_button = self.buttons.bluetooth_status_button
+        self.bt_icon = self.buttons.bluetooth_icon
+        self.bt_label = self.buttons.bluetooth_label
+        self.bt_menu_button = self.buttons.bluetooth_menu_button
+        self.bt_menu_label = self.buttons.bluetooth_menu_label
+
+        # self.client = NetworkClient(on_device_added=self.on_device_added)
+        self.scan_label = Label(name="bluetooth-scan-label", markup=icons.radar)
+        self.scan_button = Button(
+            name="bluetooth-scan",
+            child=self.scan_label,
+            tooltip_text="Scan for Bluetooth devices",
+            # on_clicked=lambda *_: self.client.toggle_scan()
+        )
+        self.back_button = Button(
+            name="bluetooth-back",
+            child=Label(name="bluetooth-back-label", markup=icons.chevron_left),
+            on_clicked=lambda *_: self.widgets.show_notif()
+        )
+
+        # self.client.connect("notify::enabled", lambda *_: self.status_label())
+        # self.client.connect(
+        #     "notify::scanning",
+        #     lambda *_: self.update_scan_label()
+        # )
+
+        self.paired_box = Box(spacing=2, orientation="vertical")
+        self.available_box = Box(spacing=2, orientation="vertical")
+
+        # Create a single content container with the required structure:
+        # [Paired label] [Paired devices list] [Available label] [Available devices list]
+        content_box = Box(spacing=4, orientation="vertical")
+        content_box.add(self.paired_box)
+        content_box.add(Label(name="bluetooth-section", label="Available"))
+        content_box.add(self.available_box)
+
+        self.children = [
+            CenterBox(
+                name="bluetooth-header",
+                start_children=self.back_button,
+                center_children=Label(name="bluetooth-text", label="Bluetooth Devices"),
+                end_children=self.scan_button
+            ),
+            ScrolledWindow(
+                name="bluetooth-devices",
+                min_content_size=(-1, -1),
+                child=content_box,
+                v_expand=True
+            ),
+        ]
+
+        # Trigger initial notifications to update status without delay.
+        # self.client.notify("scanning")
+        # self.client.notify("enabled")
+
+    def status_label(self):
+        # # print(self.client.enabled)
+        # if self.client.enabled:
+        #     self.bt_status_text.set_label("Enabled")
+        #     for i in [self.bt_status_button, self.bt_status_text, self.bt_icon, self.bt_label, self.bt_menu_button, self.bt_menu_label]:
+        #         i.remove_style_class("disabled")
+        #     self.bt_icon.set_markup(icons.bluetooth)
+        # else:
+            self.bt_status_text.set_label("Disabled")
+            for i in [self.bt_status_button, self.bt_status_text, self.bt_icon, self.bt_label, self.bt_menu_button, self.bt_menu_label]:
+                i.add_style_class("disabled")
+            self.bt_icon.set_markup(icons.bluetooth_off)
+
+    # def on_device_added(self, client: BluetoothClient, address: str):
+    #     if not (device := client.get_device(address)):
+    #         return
+    #     # slot = BluetoothDeviceSlot(device)
+
+    #     if device.paired:
+    #         return self.paired_box.add(slot)
+    #     return self.available_box.add(slot)
+
+    def update_scan_label(self):
+        # if self.client.scanning:
+        #     self.scan_label.add_style_class("scanning")
+        #     self.scan_button.add_style_class("scanning")
+        #     self.scan_button.set_tooltip_text("Stop scanning for Bluetooth devices")
+        # else:
+            self.scan_label.remove_style_class("scanning")
+            self.scan_button.remove_style_class("scanning")
+            self.scan_button.set_tooltip_text("Scan for Bluetooth devices")

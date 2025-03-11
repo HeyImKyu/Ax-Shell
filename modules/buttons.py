@@ -19,7 +19,7 @@ def add_hover_cursor(widget):
 
 
 class NetworkButton(Box):
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.network_client = NetworkClient()
         self._animation_timeout_id = None
         self._animation_step = 0
@@ -84,6 +84,8 @@ class NetworkButton(Box):
             spacing=0,
             children=[self.network_status_button, self.network_menu_button],
         )
+
+        self.widgets2 = kwargs["widgets"]
 
         self.widgets = [self, self.network_icon, self.network_label,
                        self.network_ssid, self.network_status_button,
@@ -433,7 +435,7 @@ class Buttons(Gtk.Grid):
         self.widgets = kwargs["widgets"]
 
         # Instantiate each button
-        self.network_button = NetworkButton()
+        self.network_button = NetworkButton(widgets=self.widgets)
         self.bluetooth_button = BluetoothButton(widgets=self.widgets)
         self.night_mode_button = NightModeButton()
         self.caffeine_button = CaffeineButton()

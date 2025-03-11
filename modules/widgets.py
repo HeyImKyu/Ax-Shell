@@ -10,6 +10,7 @@ from modules.buttons import Buttons
 from modules.calendar import Calendar
 from modules.player import Player
 from modules.bluetooth import BluetoothConnections
+from services.network import NetworkConnections
 from modules.metrics import Metrics
 from modules.controls import ControlSliders
 
@@ -29,6 +30,7 @@ class Widgets(Box):
 
         self.buttons = Buttons(widgets=self)
         self.bluetooth = BluetoothConnections(widgets=self)
+        self.network = NetworkConnections(widgets=self)
 
         self.box_1 = Box(
             name="box-1",
@@ -124,6 +126,9 @@ class Widgets(Box):
 
     def show_bt(self):
         self.applet_stack.set_visible_child(self.bluetooth)
+
+    def show_network(self):
+        self.applet_stack.set_visible_child(self.network)
 
     def show_notif(self):
         self.applet_stack.set_visible_child(self.notification_history)
