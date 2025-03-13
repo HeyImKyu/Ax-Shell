@@ -163,6 +163,7 @@ def ensure_matugen_config():
     if not os.path.exists(current_wall):
         image_path = os.path.expanduser(f"~/.config/{APP_NAME_CAP}/assets/wallpapers_example/example-1.jpg")
         os.system(f"matugen image {image_path}")
+        os.symlink(image_path, os.path.expanduser(f"~/.current.wall"))
 
 def load_bind_vars():
     """
