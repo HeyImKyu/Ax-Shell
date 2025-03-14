@@ -7,9 +7,11 @@ from fabric.widgets.button import Button
 from fabric.widgets.image import Image
 from fabric.widgets.eventbox import EventBox
 from fabric.widgets.wayland import WaylandWindow as Window
+from fabric.widgets.overlay import Overlay
 from fabric.hyprland.widgets import get_hyprland_connection
 from fabric.utils import exec_shell_command, exec_shell_command_async, idle_add, remove_handler, get_relative_path
 from fabric.utils.helpers import get_desktop_applications
+from modules.corners import MyCorner
 
 import config.data as data
 
@@ -45,10 +47,45 @@ class Dock(Window):
         self._drag_in_progress = False  # Drag lock flag
         self.is_hovered = False
 
+        self.corner_left = Box(
+            name="dock-corner-left",
+            orientation="v",
+            h_align="start",
+            children=[
+                MyCorner("top-right"),
+                Box(),
+            ]
+        )
+
+        self.corner_left.set_margin_start(56)
+
+        self.corner_right = Box(
+            name="dock-corner-right",
+            orientation="v",
+            h_align="end",
+            children=[
+                MyCorner("top-left"),
+                Box(),
+            ]
+        )
+
+        self.corner_right.set_margin_end(56)
+
         # Set up UI containers
         self.view = Box(name="viewport", orientation="h", spacing=8)
-        self.wrapper = Box(name="dock", orientation="v", children=[self.view])
-        
+        self.overlay = Overlay(
+            name="dock-overlay",
+            h_expand=True,
+            h_align="fill",
+            child=self.view,
+            overlays=[
+                self.corner_left,
+                self.corner_right,
+            ],
+        )
+
+        self.wrapper = Box(name="dock", orientation="v", children=[self.overlay])
+
         # Main dock container with hover handling
         self.dock_eventbox = EventBox()
         self.dock_eventbox.add(self.wrapper)
