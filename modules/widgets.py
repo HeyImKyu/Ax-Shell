@@ -64,6 +64,7 @@ class Widgets(Box):
             children=[
                 self.notification_history,
                 self.bluetooth,
+                self.network
             ]
         )
 

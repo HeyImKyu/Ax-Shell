@@ -339,13 +339,13 @@ class NetworkConnections(Box):
 
         self.widgets = kwargs["widgets"]
 
-        self.buttons = self.widgets.buttons.bluetooth_button
-        self.bt_status_text = self.buttons.bluetooth_status_text
-        self.bt_status_button = self.buttons.bluetooth_status_button
-        self.bt_icon = self.buttons.bluetooth_icon
-        self.bt_label = self.buttons.bluetooth_label
-        self.bt_menu_button = self.buttons.bluetooth_menu_button
-        self.bt_menu_label = self.buttons.bluetooth_menu_label
+        self.buttons = self.widgets.buttons.network_button
+        self.net_status_text = self.buttons.network_status_text
+        self.net_status_button = self.buttons.network_status_button
+        self.net_icon = self.buttons.network_icon
+        self.net_label = self.buttons.network_label
+        self.net_menu_button = self.buttons.network_menu_button
+        self.net_menu_label = self.buttons.network_menu_label
 
         # self.client = NetworkClient(on_device_added=self.on_device_added)
         self.scan_label = Label(name="bluetooth-scan-label", markup=icons.radar)
