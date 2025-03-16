@@ -1,7 +1,7 @@
 import psutil
 import subprocess
 import re
-from gi.repository import GLib
+from gi.repository import GLib, Gdk
 
 from fabric.widgets.label import Label
 from fabric.widgets.box import Box
@@ -281,6 +281,18 @@ class MetricsSmall(Overlay):
             spacing=0,
             children=[self.cpu_circle, self.cpu_revealer],
         )
+        self.cpu_event_box = EventBox(
+            events=["button-press", "enter-notify-event", "leave-notify-event"],
+            name="metrics-cpu-button",
+            orientation="h",
+            spacing=0,
+            child=self.cpu_box,
+            v_expand=True,
+            h_expand=True
+        )
+        self.cpu_event_box.connect("enter-notify-event", self.on_button_enter)
+        self.cpu_event_box.connect("leave-notify-event", self.on_button_leave)
+        self.cpu_event_box.connect("button-press-event", lambda *_: print('henlo'))
 
         # ------------------ RAM ------------------
         self.ram_icon = Label(name="metrics-icon", markup=icons.memory)
@@ -341,7 +353,7 @@ class MetricsSmall(Overlay):
         main_box.add(Box(name="metrics-sep"))
         main_box.add(self.ram_box)
         main_box.add(Box(name="metrics-sep"))
-        main_box.add(self.cpu_box)
+        main_box.add(self.cpu_event_box)
 
         # Se crea un único EventBox que envuelve todo el contenedor, para que
         # los eventos de hover se capturen de forma central y siempre queden por encima
@@ -365,6 +377,16 @@ class MetricsSmall(Overlay):
         # Estado inicial de los revealers y variables para la gestión del hover
         self.hide_timer = None
         self.hover_counter = 0
+
+    def on_button_enter(self, widget, event):
+        window = widget.get_window()
+        if window:
+            window.set_cursor(Gdk.Cursor(Gdk.CursorType.HAND2))
+
+    def on_button_leave(self, widget, event):
+        window = widget.get_window()
+        if window:
+            window.set_cursor(None)
 
     def _format_percentage(self, value: int) -> str:
         """Formato natural del porcentaje sin forzar ancho fijo."""
