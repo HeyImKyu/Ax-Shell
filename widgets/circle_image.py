@@ -97,7 +97,7 @@ class CircleImage(Gtk.DrawingArea, Widget):
             ctx.restore()
 
     def set_image_from_file(self, new_image_file: str):
-        if not new_image_file:
+        if not new_image_file or not os.path.exists(new_image_file):
             return
         pixbuf = GdkPixbuf.Pixbuf.new_from_file(new_image_file)
         self._orig_image = pixbuf
