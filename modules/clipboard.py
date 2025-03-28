@@ -34,7 +34,7 @@ class Clipboard(Box):
         self.viewport = Box(name="viewport", spacing=4, orientation="v")
         self.search_entry = Entry(
             name="search-entry",
-            placeholder="Search Applications...",
+            placeholder="Search Clipboard...",
             h_expand=True,
             notify_text=lambda entry, *_: self.arrange_viewport(entry.get_text()),
             on_activate=lambda entry, *_: self.on_search_entry_activate(entry.get_text()),
@@ -55,9 +55,9 @@ class Clipboard(Box):
             orientation="h",
             children=[
                 Button(
-                    name="config-button",
-                    child=Label(name="config-label", markup=icons.config),
-                    on_clicked=lambda *_: (exec_shell_command_async(f"python {os.path.expanduser(f"~/.config/Ax-Shell/config/config.py")}"), self.close_clipboard()),
+                    name="clear-clipboard-history-button",
+                    child=Label(name="clear-clipboard-label", markup=icons.trash),
+                    on_clicked=lambda *_: self.clear_clipboard_database(),
                 ),
                 self.search_entry,
                 Button(
@@ -304,6 +304,17 @@ class Clipboard(Box):
         cursor = conn.cursor()
 
         cursor.execute('''DELETE FROM c WHERE id = ?''', (entry_id,))
+
+        conn.commit()
+        conn.close()
+
+        self.arrange_viewport(self.search_entry.get_text())
+
+    def clear_clipboard_database(self):
+        conn = sqlite3.connect(CLIPBOARD_FILE)
+        cursor = conn.cursor()
+
+        cursor.execute('''DELETE FROM c''')
 
         conn.commit()
         conn.close()

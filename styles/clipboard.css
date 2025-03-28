@@ -13,22 +13,27 @@
   background-color: var(--primary);
 }
 
-#close-button {
+#close-button,
+#clear-clipboard-history-button {
   background-color: var(--surface);
   border-radius: 16px;
   padding: 8px;
 }
 
 #close-button:hover,
-#close-button:focus {
+#close-button:focus,
+#clear-clipboard-history-button:hover,
+#clear-clipboard-history-button:focus {
   background-color: var(--surface-bright);
 }
 
-#close-button:active {
+#close-button:active,
+#clear-clipboard-history-button:active {
   background-color: var(--red-dim);
 }
 
-#close-label {
+#close-label,
+#clear-clipboard-label {
   color: var(--red-dim);
   font-size: 24px;
 }
@@ -96,3 +101,5 @@
 #clipboard-entry-label:active #clipboard-entry-label {
   color: var(--shadow);
 }
+
+clear-clipboard-history-button {}
