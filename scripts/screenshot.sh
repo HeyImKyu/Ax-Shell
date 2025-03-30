@@ -45,3 +45,5 @@ if [ -f "$full_path" ]; then
 else
     notify-send -a "Ax-Shell" "Screenshot Aborted"
 fi
+
+hyprctl reload

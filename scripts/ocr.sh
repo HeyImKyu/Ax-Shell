@@ -10,3 +10,5 @@ if [[ -n "$ocr_text" ]]; then
 else
     notify-send -a "Ax-Shell" "OCR Failed" "No text recognized or operation failed"
 fi
+
+hyprctl reload
