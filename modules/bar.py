@@ -1,3 +1,5 @@
+import subprocess
+
 from fabric.widgets.box import Box
 from fabric.widgets.label import Label
 from fabric.widgets.datetime import DateTime
@@ -187,7 +189,7 @@ class Bar(Window):
         self.notch.open_notch("launcher")
 
     def overview(self):
-        self.notch.open_notch("overview")
+        subprocess.run(["hyprctl", "dispatch", "hyprexpo:expo", "toggle"])
 
     def power_menu(self):
         self.notch.open_notch("power")
