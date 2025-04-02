@@ -104,7 +104,7 @@ class AppLauncher(Box):
     def close_launcher(self):
         self.viewport.children = []
         self.selected_index = -1  # Reset selection
-        self.notch.close_notch()
+        self.notch.force_close_notch()
 
     def open_launcher(self):
         self._all_apps = get_desktop_applications()

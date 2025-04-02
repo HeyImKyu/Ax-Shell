@@ -82,7 +82,7 @@ class PowerMenu(Box):
         self.show_all()
 
     def close_menu(self):
-        self.notch.close_notch()
+        self.notch.force_close_notch()
 
     # Métodos de acción
     def lock(self, *args):

@@ -375,37 +375,6 @@ class Notch(Window):
                 self.bar.revealer_left.set_reveal_child(False)
                 return
 
-        # Handle pins section
-        if widget == "pins":
-            if self.stack.get_visible_child() == self.dashboard and self.dashboard.stack.get_visible_child() == self.dashboard.pins:
-                # If dashboard is already open and showing pins, close it
-                self.close_notch()
-                return
-            else:
-                # Open dashboard and navigate to pins
-                self.set_keyboard_mode("exclusive")
-
-                if self.hidden:
-                    self.notch_box.remove_style_class("hidden")
-                    self.notch_box.add_style_class("hideshow")
-
-                for style in ["launcher", "dashboard", "notification", "overview", "emoji", "power", "tools", "clipboard"]:
-                    self.stack.remove_style_class(style)
-                for w in [self.launcher, self.dashboard, self.overview, self.emoji, self.power, self.tools, self.clipboard]:
-                    w.remove_style_class("open")
-
-                self.stack.add_style_class("dashboard")
-                self.stack.set_transition_duration(0)
-                self.stack.set_visible_child(self.dashboard)
-                self.dashboard.add_style_class("open")
-                self.dashboard.go_to_section("pins")
-                self._is_notch_open = True
-                GLib.timeout_add(10, lambda: self.stack.set_transition_duration(100) or False)
-
-                self.bar.revealer_right.set_reveal_child(False)
-                self.bar.revealer_left.set_reveal_child(False)
-                return
-                
         # Handle kanban section
         if widget == "kanban":
             if self.stack.get_visible_child() == self.dashboard and self.dashboard.stack.get_visible_child() == self.dashboard.kanban:

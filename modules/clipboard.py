@@ -110,7 +110,7 @@ class Clipboard(Box):
     def close_clipboard(self):
         self.viewport.children = []
         self.selected_index = -1  # Reset selection
-        self.notch.close_notch()
+        self.notch.force_close_notch()
 
     def open_clipboard(self):
         self.arrange_viewport()

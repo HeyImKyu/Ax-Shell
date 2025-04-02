@@ -92,7 +92,7 @@ class EmojiPicker(Box):
     def close_picker(self):
         self.stack.children = []
         self.selected_index = -1
-        self.notch.close_notch()
+        self.notch.force_close_notch()
 
     def open_picker(self):
         self.search_entry.set_text("")

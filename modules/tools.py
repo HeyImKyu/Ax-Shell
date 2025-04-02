@@ -112,7 +112,7 @@ class Toolbox(Box):
         self.recorder_timer_id = GLib.timeout_add_seconds(1, self.update_screenrecord_state)
 
     def close_menu(self):
-        self.notch.close_notch()
+        self.notch.force_close_notch()
 
     # Action methods
     def ssfull(self, *args):
