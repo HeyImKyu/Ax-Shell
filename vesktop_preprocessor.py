@@ -1,7 +1,16 @@
 import os
 
 def main():
-    original_file_path = os.path.expanduser(f"~/.config/vesktop/settings/quickCss.css")
+    file_paths = [
+        f"~/.config/vesktop/settings/quickCss.css",
+        f"~/.config/Vencord/settings/quickCss.css"
+    ]
+
+    for path in file_paths:
+        ext_path = os.path.expanduser(path)
+        rewrite_file(ext_path)
+
+def rewrite_file(file_path):
     import_file_path = os.path.expanduser(f"~/.config/matugen/styles/colors.css")
 
     with open(import_file_path, 'r') as import_file:
@@ -9,7 +18,7 @@ def main():
 
     import_content = import_content.replace("vars", "root")
 
-    with open(original_file_path, 'r') as original_file:
+    with open(file_path, 'r') as original_file:
         original_content = original_file.read()
 
     start_marker = '/* start fakeimport */'
@@ -31,7 +40,7 @@ def main():
     )
 
     # Write the modified content back to the original file
-    with open(original_file_path, 'w') as original_file:
+    with open(file_path, 'w') as original_file:
         original_file.write(new_content)
 
 if __name__ == "__main__":
