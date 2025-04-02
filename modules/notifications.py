@@ -641,7 +641,8 @@ class NotificationHistory(Box):
             ellipsization="end",
             line_wrap="word-char",
         ) if hist_notif.body else Box()
-        self.hist_notif_body_label.set_single_line_mode(False)
+        if hist_notif.body:
+            self.hist_notif_body_label.set_single_line_mode(False)
         self.hist_notif_summary_box = Box(
             name="notification-summary-box",
             orientation="h",
@@ -754,7 +755,8 @@ class NotificationHistory(Box):
             ellipsization="end",
             line_wrap="word-char",
         ) if notification_box.notification.body else Box()
-        self.current_notif_body_label.set_single_line_mode(False)
+        if notification_box.notification.body:
+            self.current_notif_body_label.set_single_line_mode(False)
         self.current_notif_summary_box = Box(
             name="notification-summary-box",
             orientation="h",
