@@ -161,7 +161,7 @@ class Metrics(Box):
 
         self.battery_label = Label(
             name="battery-label",
-            markup=icons.battery,
+            markup=icons.battery_0,
         )
 
         self.battery = Box(
@@ -214,7 +214,7 @@ class Metrics(Box):
         percentage = int(value * 100)
         self.battery_label.set_markup(icon)
 
-        if percentage <= 15 and not charging:
+        if percentage <= 20 and not charging:
             self.battery_label.add_style_class("alert")
         else:
             self.battery_label.remove_style_class("alert")
@@ -397,7 +397,7 @@ class Battery(Overlay):
         )
 
         # ------------------ Battery ------------------
-        self.bat_icon = Label(name="metrics-icon", markup=icons.battery)
+        self.bat_icon = Label(name="metrics-icon", markup=icons.battery_0)
         self.bat_circle = CircularProgressBar(
             name="metrics-circle",
             value=0,
@@ -493,14 +493,15 @@ class Battery(Overlay):
             self.bat_circle.set_value(value / 100)
         percentage = int(value)
         self.bat_level.set_label(self._format_percentage(percentage))
-        if percentage <= 15 and not charging:
+        if percentage <= 20 and not charging:
             self.bat_icon.add_style_class("alert")
             self.bat_circle.add_style_class("alert")
+            self.bat_icon.set_markup(icons.battery_off)
         else:
             self.bat_icon.remove_style_class("alert")
             self.bat_circle.remove_style_class("alert")
 
-            if charging == True:
+            if charging:
                 self.bat_icon.set_markup(icons.battery_charging)
             elif percentage >= 90:
                 self.bat_icon.set_markup(icons.battery_4)
@@ -508,13 +509,10 @@ class Battery(Overlay):
                 self.bat_icon.set_markup(icons.battery_3)
             elif percentage >= 30:
                 self.bat_icon.set_markup(icons.battery_2)
-            elif percentage >= 10:
+            elif percentage >= 20:
                 self.bat_icon.set_markup(icons.battery_1)
-            elif percentage < 10:
-                self.bat_icon.set_markup(icons.battery_warning)
             else:
-                # charging can be None, so this is the fallback
-                self.bat_icon.set_markup(icons.battery_0)
+                self.bat_icon.set_markup(icons.battery_off)
 
                 
 class NetworkApplet(Button):

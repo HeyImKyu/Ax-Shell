@@ -29,7 +29,7 @@ close : str = "&#xeb55;"
 # Circles
 temp: str = "&#xeb38;"
 disk: str = "&#xea88;"
-battery: str = "&#xea38;"
+lightning: str = "&#xea38;"
 memory: str = "&#xfa97;"
 cpu: str = "&#xef8e;"
 
@@ -68,6 +68,7 @@ battery_2: str = "&#xea30;"
 battery_3: str = "&#xea31;"
 battery_4: str = "&#xea32;"
 battery_0: str = "&#xea34;"
+battery_off: str = "&#xed1c;"
 battery_warning: str = "&#xff1d;"
 battery_charging: str = "&#xea33;"
 
