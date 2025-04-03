@@ -69,7 +69,7 @@ class NetworkButton(Box):
         self.network_menu_button = Button(
             name="network-menu-button",
             # on_clicked=lambda *_: self.widgets2.show_network(),
-            on_clicked=lambda *_: exec_shell_command_async("foot --title nm-foot nmtui"),
+            on_clicked=lambda *_: exec_shell_command_async("kitty --title nm-kitty nmtui"),
             child=self.network_menu_label,
         )
         add_hover_cursor(self.network_menu_button)  # <-- Added hover
