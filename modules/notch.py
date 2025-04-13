@@ -38,14 +38,10 @@ class Notch(Window):
             all_visible=True,
         )
 
-        self.bar = kwargs.get("bar", None)
-
-        # Primero inicializamos NotificationContainer
-        self.notification = NotificationContainer(notch=self)
-        self.notification_history = self.notification.history
+        self.notif_win = kwargs["notif_win"]
 
         # Luego inicializamos el resto de componentes que dependen de notification_history
-        self.dashboard = Dashboard(notch=self)
+        self.dashboard = Dashboard(notch=self, notif_win=self.notif_win)
         self.launcher = AppLauncher(notch=self)
         self.overview = Overview()
         self.emoji = EmojiPicker(notch=self)
@@ -192,28 +188,12 @@ class Notch(Window):
         self.notch_overlay.set_overlay_pass_through(self.corner_left, True)
         self.notch_overlay.set_overlay_pass_through(self.corner_right, True)
 
-        self.notification_revealer = Revealer(
-            name="notification-revealer",
-            transition_type="slide-down",
-            transition_duration=250,
-            child_revealed=False,
-        )
-
-        self.boxed_notification_revealer = Box(
-            name="boxed-notification-revealer",
-            orientation="v",
-            children=[
-                self.notification_revealer,
-            ]
-        )
-
 
         self.notch_complete = Box(
             name="notch-complete",
             orientation="v",
             children=[
                 self.notch_overlay,
-                self.boxed_notification_revealer,
             ]
         )
 
@@ -278,7 +258,7 @@ class Notch(Window):
             self.notch_box.remove_style_class("hideshow")
             self.notch_box.add_style_class("hidden")
 
-        for widget in [self.launcher, self.dashboard, self.notification, self.overview, self.emoji, self.power, self.tools, self.clipboard]:
+        for widget in [self.launcher, self.dashboard, self.overview, self.emoji, self.power, self.tools, self.clipboard]:
             widget.remove_style_class("open")
         for style in ["launcher", "dashboard", "notification", "overview", "emoji", "power", "tools", "clipboard"]:
             self.stack.remove_style_class(style)

@@ -1,3 +1,4 @@
+from modules.notifications import NotificationBox
 import setproctitle
 import os
 from fabric import Application
@@ -7,6 +8,7 @@ from modules.sidebar import SideBar
 from modules.notch import Notch
 from modules.dock import Dock
 from modules.corners import Corners
+from modules.notification_window import NotificationWindow
 
 # Direct import of data module to avoid possible circular imports
 from config.data import APP_NAME, CACHE_DIR, CONFIG_FILE, CURRENT_WIDTH, CURRENT_HEIGHT, APP_NAME_CAP
@@ -24,11 +26,12 @@ if __name__ == "__main__":
     corners = Corners()
     bar = Bar()
     sidebar = SideBar(main_bar=bar)
-    notch = Notch()
+    notification = NotificationWindow()
+    notch = Notch(notif_win=notification)
     dock = Dock() 
     bar.notch = notch
     notch.bar = bar
-    app = Application(f"{APP_NAME}", bar, notch, dock)
+    app = Application(f"{APP_NAME}", bar, notch, dock, notification)
 
     def set_css():
         app.set_stylesheet_from_file(

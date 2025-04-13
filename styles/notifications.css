@@ -40,14 +40,12 @@
 
 #notification-stack-box {
   border-radius: 32px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 16px;
   padding: 16px;
   background-color: var(--shadow);
   margin: 8px;
   min-width: 330px;
-}
-
-#boxed-notification-revealer {
-  margin-top: -14px;
 }
 
 #notification-navigation {

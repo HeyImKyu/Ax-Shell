@@ -356,7 +356,7 @@ class NotificationHistory(Box):
             orientation="v",
             **kwargs
         )
-        self.notch = kwargs["notch"]
+        self.notif_win = kwargs["notif_win"]
         self.containers = []
         self.header_label = Label(
             name="nhh",
@@ -901,13 +901,13 @@ class NotificationContainer(Box):
     LIMITED_APPS = ["Spotify"] # Add your list of apps here
 
     def on_new_notification(self, fabric_notif, id):
-        if self.notch.notification_history.do_not_disturb_enabled:
+        if self.notif_win.notification_history.do_not_disturb_enabled:
             logger.info("Do Not Disturb mode enabled: adding notification directly to history.")
             notification = fabric_notif.get_notification_from_id(id)
             new_box = NotificationBox(notification)
             if notification.image_pixbuf:
                 cache_notification_pixbuf(new_box)
-            self.notch.notification_history.add_notification(new_box)
+            self.notif_win.notification_history.add_notification(new_box)
             return
 
         notification = fabric_notif.get_notification_from_id(id)
@@ -917,7 +917,7 @@ class NotificationContainer(Box):
 
         app_name = notification.app_name
         if app_name in self.LIMITED_APPS:
-            self.notch.notification_history.clear_history_for_app(app_name) # Clear history immediately
+            self.notif_win.notification_history.clear_history_for_app(app_name) # Clear history immediately
 
             existing_notification_index = -1
             for index, existing_box in enumerate(self.notifications):
@@ -940,7 +940,7 @@ class NotificationContainer(Box):
                 # Add new notification normally if no existing notification from the same app in live stack
                 while len(self.notifications) >= 5:
                     oldest_notification = self.notifications[0]
-                    self.notch.notification_history.add_notification(oldest_notification)
+                    self.notif_win.notification_history.add_notification(oldest_notification)
                     self.stack.remove(oldest_notification)
                     self.notifications.pop(0)
                     if self.current_index > 0:
@@ -953,7 +953,7 @@ class NotificationContainer(Box):
             # Add new notification normally for non-limited apps
             while len(self.notifications) >= 5:
                 oldest_notification = self.notifications[0]
-                self.notch.notification_history.add_notification(oldest_notification)
+                self.notif_win.notification_history.add_notification(oldest_notification)
                 self.stack.remove(oldest_notification)
                 self.notifications.pop(0)
                 if self.current_index > 0:
@@ -967,20 +967,20 @@ class NotificationContainer(Box):
             notification_box.start_timeout()
         if len(self.notifications) == 1:
             if not self.notification_box_container.get_parent():
-                self.notch.notification_revealer.add(self.notification_box_container)
-        self.notch.notification_revealer.show_all()
-        self.notch.notification_revealer.set_reveal_child(True)
+                self.notif_win.notification_revealer.add(self.notification_box_container)
+        self.notif_win.notification_revealer.show_all()
+        self.notif_win.notification_revealer.set_reveal_child(True)
         self.update_navigation_buttons()
 
     def __init__(self, **kwargs):
         super().__init__(name="notification", orientation="v", spacing=4)
-        self.notch = kwargs["notch"]
+        self.notif_win = kwargs["notif_win"]
         self._server = Notifications()
         self._server.connect("notification-added", self.on_new_notification)
         self._pending_removal = False
         self._is_destroying = False
 
-        self.history = NotificationHistory(notch=self.notch)
+        self.history = NotificationHistory(notif_win=self.notif_win)
         self.stack = Gtk.Stack(
             name="notification-stack",
             transition_type=Gtk.StackTransitionType.SLIDE_LEFT_RIGHT,
@@ -1074,7 +1074,7 @@ class NotificationContainer(Box):
                   reason_str == "NotificationCloseReason.UNDEFINED"):
                 logger.info(f"Adding notification {notification.id} to history (reason: {reason_str})")
                 notif_box.set_is_history(True)
-                self.notch.notification_history.add_notification(notif_box)
+                self.notif_win.notification_history.add_notification(notif_box)
                 notif_box.stop_timeout()
             else:
                 logger.warning(f"Unknown close reason: {reason_str} for notification {notification.id}. Defaulting to destroy.")
@@ -1082,9 +1082,9 @@ class NotificationContainer(Box):
 
             if len(self.notifications) == 1:
                 self._is_destroying = True
-                self.notch.notification_revealer.set_reveal_child(False)
+                self.notif_win.notification_revealer.set_reveal_child(False)
                 GLib.timeout_add(
-                    self.notch.notification_revealer.get_transition_duration(),
+                    self.notif_win.notification_revealer.get_transition_duration(),
                     self._destroy_container
                 )
                 return

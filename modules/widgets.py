@@ -25,7 +25,7 @@ class Widgets(Box):
             all_visible=True,
         )
 
-        self.notch = kwargs["notch"]
+        self.notif_win = kwargs["notif_win"]
 
         self.buttons = Buttons(widgets=self)
         self.bluetooth = BluetoothConnections(widgets=self)
@@ -53,7 +53,7 @@ class Widgets(Box):
 
         self.metrics = Metrics()
 
-        self.notification_history = self.notch.notification_history
+        self.notification_history = self.notif_win.notification_history
 
         self.applet_stack = Stack(
             h_expand=True,

@@ -32,8 +32,9 @@ class Dashboard(Box):
         )
 
         self.notch = kwargs["notch"]
+        self.notif_win = kwargs["notif_win"]
 
-        self.widgets = Widgets(notch=self.notch)
+        self.widgets = Widgets(notif_win=self.notif_win)
         self.kanban = Kanban()
         self.wallpapers = WallpaperSelector()
         self.visible_child = self.widgets #only for reading rn
