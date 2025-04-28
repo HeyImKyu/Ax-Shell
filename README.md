@@ -1,5 +1,17 @@
 ## A ʜᴀᴄᴋᴀʙʟᴇ sʜᴇʟʟ ꜰᴏʀ Hʏᴘʀʟᴀɴᴅ, ᴘᴏᴡᴇʀᴇᴅ ʙʏ [Fᴀʙʀɪᴄ](https://github.com/Fabric-Development/fabric/).
 
+<table align="center">
+  <tr>
+    <td colspan="4"><img src="https://github.com/user-attachments/assets/f52da9e7-31dd-4e7f-b0bb-f859816cde27"></td>
+  </tr>
+  <tr>
+    <td colspan="1"><img src="https://github.com/user-attachments/assets/4754afe9-b474-4f42-b79c-c2a1b9b6be4f"></td>
+    <td colspan="1"><img src="https://github.com/user-attachments/assets/e8e77b94-6aee-4086-b4b7-aab1878e0a4d"></td>
+    <td colspan="1"><img src="https://github.com/user-attachments/assets/6aec1a96-2325-4c1d-a569-2f88896b04ff"></td>
+    <td colspan="1" align="center"><img src="https://github.com/user-attachments/assets/26f72534-1911-4263-9e72-b7b90f0c36af"></td>
+  </tr>
+</table>
+
 This is my own Fork of [Axenide's Ax-Shell](https://github.com/Axenide/Ax-Shell)
 
 **There's a lot of stuff in here that probably wont work out of the box for anyone trying to use this.**
@@ -16,7 +28,10 @@ If you want to just run a script and have it work, take a look at the original A
   - Contains workspace switcher now
   - Has a download buttons that's implemented with aria2 to show progress and open ariang
   - Includes a VPN button to easily switch connected VPNs
+- Notifications are on the top level (above fullscreen applications) and located in the top right
 - The network button opens a new terminal with nmtui
+- Workspaces button opens hyprexpo
+- Own Clipboard-History implementation with a lot of nice features
 - Added matugen vesktop integration, so my discord theme changes as well
 - Wallpaper picker changes wallpapers on a single click
 - Ability to download wallpapers right from the wallpaper picker
@@ -29,7 +44,7 @@ If you want to just run a script and have it work, take a look at the original A
 - Changed screen corners a bit
 - Removed pins tab cause it doesnt work for me
 - Removed the coming soon tab
-- Removed example images to make the clone on nixos rebuild more slim (maybe)
+- Removed example images to make the clone on nixos rebuild more slim
 
 ### Dependencies
 - [Fabric](https://github.com/Fabric-Development/fabric)
