@@ -41,4 +41,4 @@ if os.path.exists(CONFIG_FILE):
         config = json.load(f)
     CLIPBOARD_FILE = config.get('clipboard_file', CLIPBOARD_FILE_DEFAULT)
 else:
-    CLIPBOARD_FILE = WALLPAPERS_DIR_DEFAULT
+    CLIPBOARD_FILE = CLIPBOARD_FILE_DEFAULT
