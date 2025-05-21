@@ -3,7 +3,7 @@ import os
 def main():
     file_paths = [
         f"~/.config/vesktop/settings/quickCss.css",
-        f"~/.config/Vencord/settings/quickCss.css"
+        # f"~/.config/Vencord/settings/quickCss.css"
     ]
 
     for path in file_paths:
@@ -17,6 +17,37 @@ def rewrite_file(file_path):
         import_content = import_file.read()
 
     import_content = import_content.replace("vars", "root")
+    import_content = import_content.replace("foreground", "fdasfdsa")
+    import_content = import_content.replace("background", "fdasfdsa")
+    import_content = import_content.replace("cursor", "fdasfdsa")
+    import_content = import_content.replace("primary", "main-color")
+    import_content = import_content.replace("on-primary", "fdasfdsa")
+    import_content = import_content.replace("secondary", "hover-color")
+    import_content = import_content.replace("on-secondary", "fdasfdsa")
+    import_content = import_content.replace("tertiary", "fdasfdsa")
+    import_content = import_content.replace("on-tertiary", "fdasfdsa")
+    import_content = import_content.replace("surface", "fdasfdsa")
+    import_content = import_content.replace("surface-bright", "fdasfdsa")
+    import_content = import_content.replace("error", "fdasfdsa")
+    import_content = import_content.replace("error-dim", "fdasfdsa")
+    import_content = import_content.replace("on-error", "fdasfdsa")
+    import_content = import_content.replace("error-container", "fdasfdsa")
+    import_content = import_content.replace("outline", "fdasfdsa")
+    import_content = import_content.replace("shadow", "fdasfdsa")
+    import_content = import_content.replace("red", "fdasfdsa")
+    import_content = import_content.replace("red-dim", "fdasfdsa")
+    import_content = import_content.replace("green", "fdasfdsa")
+    import_content = import_content.replace("green-dim", "fdasfdsa")
+    import_content = import_content.replace("yellow", "fdasfdsa")
+    import_content = import_content.replace("yellow-dim", "fdasfdsa")
+    import_content = import_content.replace("blue", "fdasfdsa")
+    import_content = import_content.replace("blue-dim", "fdasfdsa")
+    import_content = import_content.replace("magenta", "fdasfdsa")
+    import_content = import_content.replace("magenta-dim", "fdasfdsa")
+    import_content = import_content.replace("cyan", "fdasfdsa")
+    import_content = import_content.replace("cyan-dim", "fdasfdsa")
+    import_content = import_content.replace("white", "fdasfdsa")
+
 
     with open(file_path, 'r') as original_file:
         original_content = original_file.read()
@@ -26,6 +57,9 @@ def rewrite_file(file_path):
 
     start_index = original_content.find(start_marker)
     end_index = original_content.find(end_marker)
+
+    print(start_index)
+    print(end_index)
 
     if start_index == -1 or end_index == -1:
         raise ValueError("Start or end marker not found in the original file.")
