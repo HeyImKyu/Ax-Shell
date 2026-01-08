@@ -11,7 +11,7 @@ def main():
         rewrite_file(ext_path)
 
 def rewrite_file(file_path):
-    import_file_path = os.path.expanduser(f"~/.config/matugen/styles/colors.css")
+    import_file_path = os.path.expanduser(f"~/.config/Ax-Shell/styles/colors.css")
 
     with open(import_file_path, 'r') as import_file:
         import_content = import_file.read()

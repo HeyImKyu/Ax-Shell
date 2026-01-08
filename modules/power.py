@@ -87,7 +87,7 @@ class PowerMenu(Box):
     # Métodos de acción
     def lock(self, *args):
         print("Locking screen...")
-        exec_shell_command_async("loginctl lock-session")
+        exec_shell_command_async("hyprlock")
         self.close_menu()
 
     def suspend(self, *args):

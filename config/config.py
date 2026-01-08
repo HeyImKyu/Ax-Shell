@@ -137,7 +137,7 @@ def ensure_matugen_config():
             f'{APP_NAME}': {
                 'input_path': f'~/.config/{APP_NAME_CAP}/config/matugen/templates/{APP_NAME}.css',
                 'output_path': f'~/.config/{APP_NAME_CAP}/styles/colors.css',
-                'post_hook': f"fabric-cli exec {APP_NAME} 'app.set_css()' &"
+                'post_hook': f"~/.config/{APP_NAME_CAP}/.venv/bin/python -m fabric execute {APP_NAME} 'app.set_css()' &"
             }
         }
     }

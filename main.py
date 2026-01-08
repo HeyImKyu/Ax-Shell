@@ -1,3 +1,8 @@
+# ensure usage of gtk 3
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("GdkPixbuf", "2.0")
+
 from modules.notifications import NotificationBox
 import setproctitle
 import os
@@ -9,6 +14,7 @@ from modules.notch import Notch
 from modules.dock import Dock
 from modules.corners import Corners
 from modules.notification_window import NotificationWindow
+
 
 # Direct import of data module to avoid possible circular imports
 from config.data import APP_NAME, CACHE_DIR, CONFIG_FILE, CURRENT_WIDTH, CURRENT_HEIGHT, APP_NAME_CAP
