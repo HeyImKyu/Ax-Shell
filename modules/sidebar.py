@@ -28,7 +28,7 @@ class SideBar(Window):
         )
         self.main_bar = kwargs.get("main_bar", None)
 
-        self.aria_provider = AriaProvider()
+        # self.aria_provider = AriaProvider()
 
         self.workspaces = Workspaces(
             name="workspaces",
@@ -71,15 +71,15 @@ class SideBar(Window):
 
         # i honestly have no idea what these all do
         # if someone stumbles across this and can tell me which ones i can leave out, please do
-        self.downloads_fabricator = Fabricator(
-            poll_from=lambda v: self.aria_provider.fetch_from_aria(),
-            on_changed=lambda f, v: self.update_downloads_circle,
-            interval=3000,
-            stream=False,
-            default_value=0
-        )
-        self.downloads_fabricator.changed.connect(self.update_downloads_circle)
-        GLib.idle_add(self.update_downloads_circle, None, self.aria_provider.progress)
+        # self.downloads_fabricator = Fabricator(
+        #     poll_from=lambda v: self.aria_provider.fetch_from_aria(),
+        #     on_changed=lambda f, v: self.update_downloads_circle,
+        #     interval=3000,
+        #     stream=False,
+        #     default_value=0
+        # )
+        # self.downloads_fabricator.changed.connect(self.update_downloads_circle)
+        # GLib.idle_add(self.update_downloads_circle, None, self.aria_provider.progress)
 
 
         self.downloads_button = Button(
